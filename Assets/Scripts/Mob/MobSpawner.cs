@@ -30,7 +30,6 @@ public class MobSpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        Debug.Log("Spawn!");
         for (int i = 0; i < maxMobs; i++)
         {
             if (mobPool[i].activeSelf == false)
