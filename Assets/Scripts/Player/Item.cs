@@ -11,8 +11,9 @@ public class Item : ScriptableObject {
     public Sprite artwork;
 
     public int cost;
-    public int attack;
+    public int damage;
     public int health;
+	public int armor;
 
 	public void Print()
     {

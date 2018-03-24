@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class Interactable : MonoBehaviour {
 
@@ -11,10 +12,11 @@ public class Interactable : MonoBehaviour {
 
     bool hasInteracted = false; // Have we already interacted with the object?
 
+
     public virtual void Interact()
     {
         // This method is meant to be overwritten
-        //Debug.Log("Interacting with " + transform.name);
+        Debug.Log("Interacting with " + transform.name);
     }
 
     void Update()

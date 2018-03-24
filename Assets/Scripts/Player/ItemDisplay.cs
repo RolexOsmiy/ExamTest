@@ -19,12 +19,12 @@ public class ItemDisplay : MonoBehaviour {
     public Text attackText;
     public Text healthText;
 
-    public bool display = false;
+    bool display = false;
 
-    void Start()
-    {
-             
-    }
+	public PlayerStats playerStats;
+
+	public Shop shop;
+
 
     void Update()
     {
@@ -41,9 +41,9 @@ public class ItemDisplay : MonoBehaviour {
             toolTip.transform.position = Input.mousePosition + new Vector3(100,100,0);
             nameText.text = "" + item.name;
             descriptionText.text = "" + item.description;
-            /* costText.text = "" + item.cost;
-             attackText.text = "" + item.attack;
-             healthText.text = "" + item.health;*/
+            costText.text = "Cost:" + item.cost;
+			attackText.text = "Damage:" + item.damage;
+			healthText.text = "Health:" + item.health;
         }
         else
         {
@@ -69,7 +69,11 @@ public class ItemDisplay : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(1))
         {
-            item = null;
+			shop.gold += item.cost / 2;            
+			playerStats.damage -= item.damage;
+			playerStats.MaxHealthPoints = playerStats.MaxHealthPoints - item.health;
+			item = null;
+			print (playerStats.damage);
         }        
     }
 }

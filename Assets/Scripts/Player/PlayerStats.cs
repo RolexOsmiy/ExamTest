@@ -3,28 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Stats : MonoBehaviour {
+public class PlayerStats : MonoBehaviour {
 
-    /* public float attackSpeed;
-     public float damage;
-     public float movemmentSpeed;*/
-
-    public float exp;
-
-    [System.Serializable]
-    public class lvl
-    {
-        public float currExp = 0;
-        public float needExp = 120;
-    }
-    [Header("Level System")]
-    public int currLevel = 0;
-    public lvl[] level;
-
+	public Text damageText;
+	public Text healthText;
+	public Text armorText;
+	public Text essenceText;
+	public Image essenceIcon;
 
     [SerializeField]
     private Image image;
 
+	[Header("Stats")]
+	public Essence essence;
     [SerializeField]
     private float maxHealthPoints = 100;
 
@@ -34,14 +25,27 @@ public class Stats : MonoBehaviour {
     [SerializeField]
     private float damagesDecreaseRate = 10;
 
+	public float damage;
+	public float armor;
     private float currentHealthPoints;
-    public GameObject healEffect;
+    
+
+	[Header("Effects")]
+	public GameObject healEffect;
+	public ParticleSystem hitEffect;
 
     private RectTransform imageRectTransform;
 
     private float damages;
 
-    public float Health
+
+	void Start()
+	{
+		hitEffect.Stop ();
+	}
+
+
+	public float Health
     {
         get { return currentHealthPoints; }
         set
@@ -77,13 +81,21 @@ public class Stats : MonoBehaviour {
 
     protected void Update()
     {
+		damageText.text = "Damage: " + damage;
+		healthText.text = "Health: " + (int)currentHealthPoints + "/" + maxHealthPoints;
+		armorText.text = "Armor: " + armor;
+		essenceText.text = "Essence: " + essence.name;
+		essenceIcon.sprite = essence.artwork;
+
+
         if (currentHealthPoints > maxHealthPoints)
         {
             currentHealthPoints = maxHealthPoints;
         }
-        if (Health < 1)
+		if (currentHealthPoints < 1)
         {
             this.gameObject.SetActive(false);
+			Debug.Log ("Player die!");
         }
         if (Damages > 0)
         {
@@ -92,7 +104,7 @@ public class Stats : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Hurt(10);
+			Hurt(damage);
         }
 
         image.gameObject.transform.rotation = Quaternion.Euler(90, -90, 0);
@@ -103,9 +115,11 @@ public class Stats : MonoBehaviour {
         float returnExp = 0;
         Damages = damagesPoints;
         Health -= Damages;
+
+		hitEffect.Play();
         if (Health < 1)
         {
-            returnExp = exp;            
+            //return exp           
         }        
         return returnExp;
     }
@@ -115,16 +129,19 @@ public class Stats : MonoBehaviour {
         currentHealthPoints = maxHealthPoints;
     }
 
-    public void Heal(float reg)
+    public void Heal()
     {
         if (currentHealthPoints <= maxHealthPoints)
         {
-            currentHealthPoints += reg * Time.deltaTime;
+			currentHealthPoints += (1/(100/currentHealthPoints)) * Time.deltaTime;
         }
     }
 
     void Awake()
     {
+		SetStats ();
+
+
         imageRectTransform = image.GetComponent<RectTransform>();
         image.material = Instantiate(image.material); // Clone material
 
@@ -134,17 +151,13 @@ public class Stats : MonoBehaviour {
         currentHealthPoints = MaxHealthPoints;
     }
 
-    void Start()
-    {
-        
-    }
-
     void OnTriggerStay(Collider coll)
     {
         if (coll.tag == "HealSpot" & currentHealthPoints < maxHealthPoints)
         {
-            Health += coll.GetComponent<HealSpot>().regPerSec * Time.deltaTime;
-            healEffect.SetActive(true);
+			print ("heal");
+			Heal ();
+			healEffect.SetActive(true);
         }
         else if (coll.tag == "HealSpot" & currentHealthPoints >= maxHealthPoints)
         {
@@ -163,4 +176,12 @@ public class Stats : MonoBehaviour {
     {
         Health = maxHealthPoints;
     }
+
+	public void SetStats()
+	{
+		maxHealthPoints = essence.defaultHealth;
+		damage = essence.defaultDamage;
+		armor = essence.defaultArmor;
+	}
+
 }

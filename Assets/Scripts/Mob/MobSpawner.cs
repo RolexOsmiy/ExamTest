@@ -19,7 +19,6 @@ public class MobSpawner : MonoBehaviour
             mob.SetActive(false);
             mobPool.Add(mob);
         }
-        //StartCoroutine(WaitMinute());
         InvokeRepeating("SpawnEnemy",0, 5);
     }
 
@@ -36,15 +35,9 @@ public class MobSpawner : MonoBehaviour
             {
                 mobPool[i].transform.position = spawnPoints[i].transform.position;
                 mobPool[i].transform.rotation = spawnPoints[i].transform.rotation;
-                mobPool[i].GetComponent<Stats>().ResetStats();
                 mobPool[i].SetActive(true);
+				mobPool [i].GetComponent<CharacterStats> ().Respawn ();
             }
         }
-    }
-
-    IEnumerator WaitMinute()
-    {
-        yield return new WaitForSeconds(5);
-        SpawnEnemy();
     }
 }

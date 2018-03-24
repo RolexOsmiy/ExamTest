@@ -12,12 +12,26 @@ public class EnemyController : MonoBehaviour {
 	public Transform target;	// Reference to the player
 	NavMeshAgent agent; // Reference to the NavMeshAgent
 
+
+	public bool isRange;
+	float attackSpeed = 2f;
+	float currAttackSpeed = 0;
+
 	void Start () {
 		agent = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 	
-	void Update () {        
+	void Update () {  
+		currAttackSpeed -= Time.deltaTime;	
+
+		if (Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position) <= 2) {
+			isRange = true;
+		} else 
+		{
+			isRange = false;
+			StopCoroutine (Attack ());
+		}
         if (target)
         {
             // Distance to the target
@@ -33,6 +47,14 @@ public class EnemyController : MonoBehaviour {
                 if (distance <= agent.stoppingDistance && target)
                 {
                     FaceTarget();   // Make sure to face towards the target
+
+					if (isRange) 
+					{			
+						if (currAttackSpeed <= 0) {
+							StartCoroutine (Attack ());
+							currAttackSpeed = attackSpeed;
+						}
+					}
                 }
             }
         }
@@ -52,4 +74,11 @@ public class EnemyController : MonoBehaviour {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(transform.position, lookRadius);
 	}    
+
+	IEnumerator Attack()
+	{
+		yield return new WaitForSeconds (1f);
+		target.gameObject.GetComponent<PlayerStats> ().Hurt (this.gameObject.GetComponent<CharacterStats> ().damage);
+		print ("Hit from mob");
+	}
 }
