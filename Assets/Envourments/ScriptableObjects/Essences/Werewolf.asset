@@ -14,7 +14,10 @@ MonoBehaviour:
   name: Werewolf
   description: Just werewolf.
   race: Werewolf
+  branch: 1
+  toBranch: 2
   artwork: {fileID: 21300000, guid: 01c5dd0d10cb6e34bbac053e734fa1f9, type: 3}
+  skin: {fileID: 0}
   requiredLevel: 2
   defaultDamage: 80
   defaultHealth: 450

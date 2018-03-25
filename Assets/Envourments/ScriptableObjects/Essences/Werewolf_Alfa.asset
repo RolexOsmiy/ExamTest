@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0840d69fe3bfac545843f99909159ce8, type: 3}
-  m_Name: Bacteria
+  m_Name: Werewolf_Alfa
   m_EditorClassIdentifier: 
-  name: Bacteria
-  description: Just bacteria.
-  race: Nothing
-  branch: 0
-  toBranch: 1
-  artwork: {fileID: 21300000, guid: c090dcf21abc33844a46ba6ce597d4ed, type: 3}
+  name: Werewolf alfa
+  description: Hight werewolf
+  race: werewolf
+  branch: 2
+  toBranch: 3
+  artwork: {fileID: 21300000, guid: 54e98ec962348014c98eee298c01af10, type: 3}
   skin: {fileID: 0}
   requiredLevel: 0
-  defaultDamage: 15
-  defaultHealth: 400
+  defaultDamage: 150
+  defaultHealth: 600
   defaultArmor: 0

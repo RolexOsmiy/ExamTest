@@ -9,7 +9,12 @@ public class Essence : ScriptableObject {
 	public string description;
 	public string race;
 
+	public int branch;
+	public int toBranch;
+
 	public Sprite artwork;
+
+	public GameObject skin;
 
 	public int requiredLevel;
 	public int defaultDamage;

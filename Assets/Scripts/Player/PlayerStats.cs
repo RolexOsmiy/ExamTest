@@ -16,6 +16,8 @@ public class PlayerStats : MonoBehaviour {
 
 	[Header("Stats")]
 	public Essence essence;
+
+	public int lvl = 0;
     [SerializeField]
     private float maxHealthPoints = 100;
 
@@ -81,6 +83,9 @@ public class PlayerStats : MonoBehaviour {
 
     protected void Update()
     {
+		Health -= 0;
+
+
 		damageText.text = "Damage: " + damage;
 		healthText.text = "Health: " + (int)currentHealthPoints + "/" + maxHealthPoints;
 		armorText.text = "Armor: " + armor;
@@ -133,7 +138,7 @@ public class PlayerStats : MonoBehaviour {
     {
         if (currentHealthPoints <= maxHealthPoints)
         {
-			currentHealthPoints += (1/(100/currentHealthPoints)) * Time.deltaTime;
+			currentHealthPoints += (15/(100/currentHealthPoints)) * Time.deltaTime;
         }
     }
 
@@ -155,7 +160,6 @@ public class PlayerStats : MonoBehaviour {
     {
         if (coll.tag == "HealSpot" & currentHealthPoints < maxHealthPoints)
         {
-			print ("heal");
 			Heal ();
 			healEffect.SetActive(true);
         }
@@ -184,4 +188,18 @@ public class PlayerStats : MonoBehaviour {
 		armor = essence.defaultArmor;
 	}
 
+	public void EvolutionSetStats()
+	{		
+		damageText.text = "Damage: " + damage;
+		healthText.text = "Health: " + (int)currentHealthPoints + "/" + maxHealthPoints;
+		armorText.text = "Armor: " + armor;
+		essenceText.text = "Essence: " + essence.name;
+		essenceIcon.sprite = essence.artwork;
+
+		maxHealthPoints = essence.defaultHealth;
+		damage = essence.defaultDamage;
+		armor = essence.defaultArmor;
+
+		Health -= 0;
+	}
 }

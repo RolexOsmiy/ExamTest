@@ -17,7 +17,7 @@ public class Shop : MonoBehaviour {
 	}
 
 	void Update () {
-		goldText.text = "Gold: " + gold;
+		goldText.text = "" + gold;
 	}
 
 	public void BuyItem(Item item)
@@ -32,6 +32,7 @@ public class Shop : MonoBehaviour {
 					print (playerStats.damage);
 					playerStats.MaxHealthPoints = playerStats.MaxHealthPoints + itemSlot[i].item.health;
 					gold -= item.cost;
+					playerStats.Hurt (0);
 					break;
 				}
 			}
