@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class ItemDisplay : MonoBehaviour {
+public class ItemDisplay : NetworkBehaviour {
 
     public Item item;
 

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class EssenceDisplay : MonoBehaviour {
+public class EssenceDisplay : NetworkBehaviour {
 
 	public Essence essence;
 

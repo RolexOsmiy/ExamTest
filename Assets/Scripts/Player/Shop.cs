@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Shop : MonoBehaviour {
+public class Shop : NetworkBehaviour {
 
 	public ItemDisplay[] itemSlot; 
 

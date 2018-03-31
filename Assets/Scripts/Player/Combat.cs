@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Combat : MonoBehaviour {
+public class Combat : NetworkBehaviour {
 
 	public LayerMask interactionMask; 
 	Camera cam; 

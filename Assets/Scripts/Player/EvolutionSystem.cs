@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class EvolutionSystem : MonoBehaviour
+public class EvolutionSystem : NetworkBehaviour
 {
 	public EssenceArray[] essenceArray;
 	public int _currentBranch;

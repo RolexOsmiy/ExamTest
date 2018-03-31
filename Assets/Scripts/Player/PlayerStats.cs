@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class PlayerStats : MonoBehaviour {
+public class PlayerStats : NetworkBehaviour {
 
 	public Text damageText;
 	public Text healthText;
