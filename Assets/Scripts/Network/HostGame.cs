@@ -13,8 +13,9 @@ public class HostGame : MonoBehaviour {
 
 	void Start()
 	{
-		networkManager = NetworkManager.singleton;
-		if (networkManager.matchMaker == null) 
+        networkManager = NetworkManager.singleton;
+
+        if (networkManager.matchMaker == null) 
 		{
 			networkManager.StartMatchMaker ();
 		}

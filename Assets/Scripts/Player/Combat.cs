@@ -62,7 +62,8 @@ public class Combat : NetworkBehaviour {
 		if (target) {
 			yield return new WaitForSeconds (1f);
 			target.gameObject.GetComponent<CharacterStats> ().Hurt (this.gameObject.GetComponent<PlayerStats> ().damage);
-			print ("Hit from player");
+            target.gameObject.GetComponent<PlayerStats>().Hurt(this.gameObject.GetComponent<PlayerStats>().damage);
+            print ("Hit from player");
 		}
 	}
 }

@@ -20,13 +20,11 @@ public class EvolutionSystem : NetworkBehaviour
 			for (int i = 0; i < essenceArray.Length; i++) 
 			{
 				if (playerStats.lvl >= essenceArray [i].minLvl & _currentBranch == essenceArray [i].essence.branch) {
-					print ("activate!");
 					slots [i].slotObject.GetComponent<EssenceDisplay> ().essence = essenceArray [i].essence;
 					slots [i].slotObject.SetActive (true);
 				} 
 				else 
 				{
-					print ("deactivate!");
 					slots [i].slotObject.SetActive (false);
 				}
 			}
