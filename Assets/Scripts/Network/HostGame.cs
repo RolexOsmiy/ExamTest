@@ -13,6 +13,7 @@ public class HostGame : MonoBehaviour {
 
 	void Start()
 	{
+        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         networkManager = NetworkManager.singleton;
 
         if (networkManager.matchMaker == null) 
