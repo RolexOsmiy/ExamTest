@@ -31,6 +31,8 @@ public class PlayerStats : NetworkBehaviour {
 	public float damage;
 	public float armor;
     private float currentHealthPoints;
+
+	public float moveSpeed = 3;
     
 
 	[Header("Effects")]

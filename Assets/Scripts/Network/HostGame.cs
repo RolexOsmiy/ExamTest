@@ -9,7 +9,7 @@ public class HostGame : MonoBehaviour {
 
 	string roomName;
 
-	NetworkManager networkManager;
+	public NetworkManager networkManager;
 
 	void Start()
 	{

@@ -1,93 +1,33 @@
-using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.EventSystems;
-using UnityEngine.Networking;
+﻿using UnityEngine;
 
-/* Controls the player. Here we chose our "focus" and where to move. */
+public class PlayerController : MonoBehaviour
+{
+	float moveSpeed;
+	public Rigidbody rigidbody;
+	public GameObject body;
 
-[RequireComponent(typeof(PlayerMotor))]
-public class PlayerController : NetworkBehaviour {
+	void Start()
+	{
+		moveSpeed = this.gameObject.GetComponent<PlayerStats> ().moveSpeed;
+	}
 
-    public delegate void OnFocusChanged(Interactable newFocus);
-    public OnFocusChanged onFocusChangedCallback;
+	void Update() 
+	{
+		transform.position = new Vector3 (body.transform.position.x, body.transform.position.y, body.transform.position.z);
 
-    public Interactable focus;  // Our current focus: Item, Enemy etc.
+		var x = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
+		var z = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
+		body.transform.Translate(x, 0, z);
 
-    public LayerMask movementMask;      // The ground
-    public LayerMask interactionMask;   // Everything we can interact with
 
-    PlayerMotor motor;      // Reference to our motor
-    Camera cam;             // Reference to our camera
-
-    // Get references
-    void Start()
-    {
-        motor = GetComponent<PlayerMotor>();
-        cam = Camera.main;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
-
-        // If we press left mouse
-        if (Input.GetMouseButtonDown(0))
-        {
-            // Shoot out a ray
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            // If we hit
-            if (Physics.Raycast(ray, out hit, movementMask))
-            {
-                motor.MoveToPoint(hit.point);
-
-                SetFocus(null);
-            }
-        }
-
-        // If we press right mouse
-        if (Input.GetMouseButtonDown(1))
-        {
-            // Shoot out a ray
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            // If we hit
-            if (Physics.Raycast(ray, out hit, 100f, interactionMask))
-            {
-                SetFocus(hit.collider.GetComponent<Interactable>());
-            }
-        }
-
-    }
-
-    // Set our focus to a new focus
-    void SetFocus(Interactable newFocus)
-    {
-        if (onFocusChangedCallback != null)
-            onFocusChangedCallback.Invoke(newFocus);
-
-        // If our focus has changed
-        if (focus != newFocus && focus != null)
-        {
-            // Let our previous focus know that it's no longer being focused
-            focus.OnDefocused();
-        }
-
-        // Set our focus to what we hit
-        // If it's not an interactable, simply set it to null
-        focus = newFocus;
-
-        if (focus != null)
-        {
-            // Let our focus know that it's being focused
-            focus.OnFocused(transform);
-        }
-
-    }
-
+		Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
+		Plane plane=new Plane(Vector3.up, Vector3.zero);
+		float distance;
+		if(plane.Raycast(ray, out distance)) {
+			Vector3 target=ray.GetPoint(distance);
+			Vector3 direction=target-transform.position;
+			float rotation=Mathf.Atan2(direction.x, direction.z)*Mathf.Rad2Deg;
+			body.transform.rotation=Quaternion.Euler(0, rotation, 0);
+		}
+	}
 }
