@@ -8,8 +8,6 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour {
 
 	public Animator animator;
-	public Animation anim;
-	public int x = 0;
 
 	public float lookRadius = 10f;	// Detection range for player
 
@@ -20,6 +18,7 @@ public class EnemyController : MonoBehaviour {
 	public bool isRange;
 	float attackSpeed = 2f;
 	float currAttackSpeed = 0;
+	bool isAttack = false;
 
 	void Start () {
 		agent = GetComponent<NavMeshAgent>();        
@@ -29,18 +28,19 @@ public class EnemyController : MonoBehaviour {
 		if (!target) {
 			target = GameObject.FindGameObjectWithTag ("Player").transform;
 		}
+		// Distance to the target
+		float distance = Vector3.Distance (target.position, transform.position);
+
 		currAttackSpeed -= Time.deltaTime;	
 
-		if (Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position) <= 2) {
+		if (Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position) <= agent.stoppingDistance) {
 			isRange = true;
+			Debug.Log (Vector3.Distance (this.gameObject.transform.position, target.gameObject.transform.position));
 		} else {
 			isRange = false;
 			StopCoroutine (Attack ());
 		}
-		if (target) {			
-			// Distance to the target
-			float distance = Vector3.Distance (target.position, transform.position);
-
+		if (target) {	
 			// If inside the lookRadius
 			if (distance <= lookRadius) {
 				// Move towards the target
@@ -59,26 +59,21 @@ public class EnemyController : MonoBehaviour {
 				}
 			}
 		}
-
-		if (currAttackSpeed <= 0 && isRange) {
+		if (isRange && distance <= agent.stoppingDistance && target && isAttack) {
 			animator.SetInteger ("State", 2);
-			Debug.Log ("2");//атака				
-
-		}
-		if (isRange) {
-			animator.SetInteger ("State", 0);
-			Debug.Log ("0");//погоня/бег
-		}
-		if (target && isRange) {
+		} else if (distance <= lookRadius && distance > agent.stoppingDistance && target) {
 			animator.SetInteger ("State", 1);
-			Debug.Log ("1");//стояние
-		}
+		} else if (!isRange) { 
+			animator.SetInteger ("State", 0);
+		} else if (distance <= lookRadius && distance < agent.stoppingDistance && target) {
+			animator.SetInteger ("State", 0);
+		} 
 	}
 
 	// Rotate to face the target
 	void FaceTarget ()
 	{
-        Vector3 direction = (target.position - transform.position).normalized;
+		Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);	
 	}
@@ -91,9 +86,12 @@ public class EnemyController : MonoBehaviour {
 	}    
 
 	IEnumerator Attack()
-	{				
+	{			
+		isAttack = true;
+		AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);
 		yield return new WaitForSeconds (1f);
-		//target.gameObject.GetComponent<PlayerStats> ().Hurt (this.gameObject.GetComponent<CharacterStats> ().damage);
+		target.gameObject.GetComponent<PlayerStats> ().Hurt (this.gameObject.GetComponent<CharacterStats> ().damage);
 		print ("Hit from mob");
+		isAttack = false;
 	}
 }

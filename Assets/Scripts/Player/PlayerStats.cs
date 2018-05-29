@@ -12,6 +12,8 @@ public class PlayerStats : NetworkBehaviour {
 	public Text essenceText;
 	public Image essenceIcon;
 
+	public GameObject popoutDamage;
+
     [SerializeField]
     private Image image;
 
@@ -115,21 +117,23 @@ public class PlayerStats : NetworkBehaviour {
 			Hurt(damage);
         }
 
-        image.gameObject.transform.rotation = Quaternion.Euler(90, -90, 0);
+        image.gameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 
-    public float Hurt(float damagesPoints)
-    {
-        float returnExp = 0;
+	public void Hurt(float damagesPoints)
+    {		
         Damages = damagesPoints;
         Health -= Damages;
 
 		hitEffect.Play();
+		GameObject clone;
+		clone = Instantiate(popoutDamage, transform.position, transform.rotation);
+		clone.GetComponentInChildren<PopoutDamage>().damageText.text = damagesPoints + "";
+
         if (Health < 1)
         {
             //return exp           
-        }        
-        return returnExp;
+        }
     }
 
     public void Respawn()

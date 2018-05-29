@@ -2,8 +2,9 @@
 
 public class PlayerController : MonoBehaviour
 {
-	float moveSpeed;
-	public Rigidbody rigidbody;
+	public float moveSpeed;
+	public float maxSpeed = 3;
+	public Rigidbody rb;
 	public GameObject body;
 
 	void Start()
@@ -13,11 +14,16 @@ public class PlayerController : MonoBehaviour
 
 	void Update() 
 	{
+		if(rb.velocity.magnitude > maxSpeed)
+		{
+			rb.velocity = rb.velocity.normalized * maxSpeed;
+		}
 		transform.position = new Vector3 (body.transform.position.x, body.transform.position.y, body.transform.position.z);
 
 		var x = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
 		var z = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
-		body.transform.Translate(x, 0, z);
+		//body.transform.Translate(x, 0, z);
+		rb.AddForce(new Vector3(x,0,z) * moveSpeed);
 
 
 		Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);

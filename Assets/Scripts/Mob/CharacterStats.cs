@@ -97,7 +97,7 @@ public class CharacterStats : MonoBehaviour {
 			Hurt(damage);
 		}
 
-		image.gameObject.transform.rotation = Quaternion.Euler(90, -90, 0);
+		image.gameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
 	}
 
 	public float Hurt(float damagesPoints)
