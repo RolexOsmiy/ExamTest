@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Networking;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HostGame : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class HostGame : MonoBehaviour {
 	string roomName;
 
 	public NetworkManager networkManager;
+
+    public Text statusText;
 
 	void Start()
 	{
@@ -31,6 +34,7 @@ public class HostGame : MonoBehaviour {
 	{
 		if (roomName != "" && roomName != null) 
 		{
+            statusText.text = "Creating room";
 			print ("Create room " + roomName + " With room size for " + roomSize + " players;");
 
 			//Create room
