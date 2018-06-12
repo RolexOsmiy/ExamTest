@@ -1,43 +1,46 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class MobSpawner : MonoBehaviour
+public class MobSpawner : NetworkBehaviour
 {
     public Transform[] spawnPoints;
     public GameObject prefab;
     public int maxMobs;
-    bool spawning = true;
+	public bool spawning = true;
 
-    List<GameObject> mobPool = new List<GameObject>();
+	public List<GameObject> mobPool = new List<GameObject>();
 
     void Start()
     {
-        for (int i = 0; i < maxMobs; i++)
-        {
-            GameObject mob = Instantiate(prefab, spawnPoints[i].transform.position, spawnPoints[i].transform.rotation);
-            mob.SetActive(false);
-            mobPool.Add(mob);
-        }
-        InvokeRepeating("SpawnEnemy",0, 5);
+		SpawnEnemy ();
     }
 
     void Update()
     {
-        
+		if (mobPool.Count == null) {
+			print ("epmty");
+		}
     }
 
     public void SpawnEnemy()
     {
-        for (int i = 0; i < maxMobs; i++)
-        {
-            if (mobPool[i].activeSelf == false)
-            {
-                mobPool[i].transform.position = spawnPoints[i].transform.position;
-                mobPool[i].transform.rotation = spawnPoints[i].transform.rotation;
-                mobPool[i].SetActive(true);
-				mobPool [i].GetComponent<CharacterStats> ().Respawn ();
-            }
-        }
+		if (spawning) 
+		{
+			for (int i = 0; i < maxMobs; i++)
+			{				
+				GameObject newMob = Instantiate (prefab, spawnPoints [i].transform.position, spawnPoints [i].transform.rotation);
+				mobPool.Add(newMob);
+			}
+		}        
     }
+
+	void OnTriggerExit(Collider coll)
+	{
+		if (coll.tag == "DeathGas") 
+		{			
+			spawning = false;
+		}
+	}
 }

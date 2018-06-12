@@ -7,6 +7,10 @@ TagManager:
   - AttackRegion
   - Enemy
   - HealSpot
+  - Timer
+  - PlayerBody
+  - UsersList
+  - DeathGas
   layers:
   - Default
   - TransparentFX

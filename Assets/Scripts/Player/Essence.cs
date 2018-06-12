@@ -20,4 +20,5 @@ public class Essence : ScriptableObject {
 	public int defaultDamage;
 	public int defaultHealth;
 	public int defaultArmor;
+	public int attackSpeed;
 }

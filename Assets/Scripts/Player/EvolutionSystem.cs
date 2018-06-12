@@ -19,7 +19,8 @@ public class EvolutionSystem : NetworkBehaviour
 		{
 			for (int i = 0; i < essenceArray.Length; i++) 
 			{
-				if (playerStats.lvl >= essenceArray [i].minLvl & _currentBranch == essenceArray [i].essence.branch) {
+				if (playerStats.currLevel >= essenceArray [i].minLvl & _currentBranch == essenceArray [i].essence.branch) 
+				{
 					slots [i].slotObject.GetComponent<EssenceDisplay> ().essence = essenceArray [i].essence;
 					slots [i].slotObject.SetActive (true);
 				} 
@@ -33,10 +34,13 @@ public class EvolutionSystem : NetworkBehaviour
 
 	public void Evolution(GameObject slot)
 	{
-		_currentBranch = slot.GetComponent<EssenceDisplay>().essence.toBranch;
-		playerStats.essence = slot.GetComponent<EssenceDisplay>().essence;
-		playerStats.EvolutionSetStats ();
-		print (_currentBranch);
+		if (playerStats.currLevel >= slot.GetComponent<EssenceDisplay>().essence.requiredLevel) 
+		{
+			_currentBranch = slot.GetComponent<EssenceDisplay>().essence.toBranch;
+			playerStats.essence = slot.GetComponent<EssenceDisplay>().essence;
+			playerStats.EvolutionSetStats ();
+			print (_currentBranch);
+		}
 	}
 }
 

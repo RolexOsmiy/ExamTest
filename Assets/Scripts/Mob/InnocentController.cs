@@ -26,7 +26,7 @@ public class InnocentController : MonoBehaviour {
 	[SerializeField]
 	private float damagesDecreaseRate = 10;
 
-	private float currentHealthPoints;
+	public float currentHealthPoints;
 
 	[Header("Effects")]
 	public GameObject healEffect;
@@ -117,22 +117,16 @@ public class InnocentController : MonoBehaviour {
 		image.gameObject.transform.rotation = Quaternion.Euler(90, -90, 0);
 	}
 
-	public float Hurt(float damagesPoints)
+	public void Hurt(float damagesPoints)
 	{
 		float returnExp = 0;
 		Damages = damagesPoints;
 		Health -= Damages;
 
 		hitEffect.Play();
-
-		if (Health < 1)
-		{
-			this.gameObject.SetActive (false);            
-		}     
 		Vector3 point;
 		RandomPoint (transform.position, runRange, out point);
 		agent.SetDestination (point);
-		return returnExp;
 	}
 
 	public void Respawn()
@@ -190,12 +184,6 @@ public class InnocentController : MonoBehaviour {
 
 		currentHealth -= damage;
 		Debug.Log(transform.name + " takes " + damage + " damage.");
-
-
-		if (currentHealth <= 1)
-		{
-			this.gameObject.SetActive (false);
-		}
 	}
 
 	void ChangePos()

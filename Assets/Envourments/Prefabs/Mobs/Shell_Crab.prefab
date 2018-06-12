@@ -97,6 +97,10 @@ GameObject:
   - component: {fileID: 95888392409149332}
   - component: {fileID: 195612812118247548}
   - component: {fileID: 114155230374864130}
+  - component: {fileID: 65033318550915064}
+  - component: {fileID: 54831419348895840}
+  - component: {fileID: 114710157621877196}
+  - component: {fileID: 114127500003706436}
   m_Layer: 0
   m_Name: Shell_Crab
   m_TagString: Untagged
@@ -900,8 +904,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1158295113754544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.304291, y: 0, z: 4.8432693}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalPosition: {x: -20.59542, y: 19.996338, z: -53.92557}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 4851366410909336}
   - {fileID: 4337437483301116}
@@ -1100,6 +1104,33 @@ Transform:
   m_Father: {fileID: 4216909199519130}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54831419348895840
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158295113754544}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &65033318550915064
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158295113754544}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!95 &95888392409149332
 Animator:
   serializedVersion: 3
@@ -1117,6 +1148,27 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114127500003706436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158295113754544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114155230374864130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1135,6 +1187,7 @@ MonoBehaviour:
   maxHealthPoints: 100
   healthBarStepsLength: 50
   damagesDecreaseRate: 200
+  currentHealthPoints: 0
   healEffect: {fileID: 1338094382874324}
   hitEffect: {fileID: 198356499786893194}
 --- !u!114 &114339859602228192
@@ -1201,6 +1254,38 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114710157621877196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158295113754544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 246
+    i1: 128
+    i2: 14
+    i3: 225
+    i4: 138
+    i5: 183
+    i6: 120
+    i7: 36
+    i8: 27
+    i9: 81
+    i10: 176
+    i11: 233
+    i12: 27
+    i13: 150
+    i14: 202
+    i15: 151
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
 --- !u!137 &137547194144615662
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

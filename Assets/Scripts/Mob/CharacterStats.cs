@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-/* Contains all the stats for a character. */
-
 public class CharacterStats : MonoBehaviour {
 
 	public float currentHealth {get;protected set;}	// Current amount of health
@@ -11,6 +9,8 @@ public class CharacterStats : MonoBehaviour {
 	public float health;
 	public float damage;
 	public float armor;
+
+	public float exp = 100;
 
 	[SerializeField]
 	private Image image;
@@ -78,15 +78,14 @@ public class CharacterStats : MonoBehaviour {
 
 	protected void Update()
 	{
+		if (currentHealthPoints < maxHealthPoints) {
+			currentHealthPoints += Time.deltaTime;
+		}
 		if (currentHealthPoints > maxHealthPoints)
 		{
 			currentHealthPoints = maxHealthPoints;
 		}
-		if (currentHealthPoints < 1)
-		{
-			this.gameObject.SetActive(false);
-			Debug.Log ("Mob die!");
-		}
+
 		if (Damages > 0)
 		{
 			Damages -= damagesDecreaseRate * Time.deltaTime;
@@ -100,19 +99,12 @@ public class CharacterStats : MonoBehaviour {
 		image.gameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
 	}
 
-	public float Hurt(float damagesPoints)
+	public void Hurt(float damagesPoints)
 	{
-		float returnExp = 0;
 		Damages = damagesPoints;
 		Health -= Damages;
 
 		hitEffect.Play();
-
-		if (Health < 1)
-		{
-			this.gameObject.SetActive (false);            
-		}        
-		return returnExp;
 	}
 
 	public void Respawn()
@@ -121,14 +113,6 @@ public class CharacterStats : MonoBehaviour {
 		MaxHealthPoints = MaxHealthPoints;
 		currentHealthPoints = MaxHealthPoints;
 		Hurt (0);
-	}
-
-	public void Heal()
-	{
-		if (currentHealthPoints <= maxHealthPoints)
-		{
-			currentHealthPoints += (1/(100/currentHealthPoints)) * Time.deltaTime;
-		}
 	}
 
 	void Awake()
@@ -144,22 +128,11 @@ public class CharacterStats : MonoBehaviour {
 		
 	void OnTriggerStay(Collider coll)
 	{
-		if (coll.tag == "HealSpot" & currentHealth < maxHealthPoints)
-		{
-			Heal ();
-			healEffect.SetActive (true);
-		}
-		else if (coll.tag == "HealSpot" & currentHealth >= maxHealthPoints)
-		{
-			healEffect.SetActive (false);
-		}
+		
 	}
 	void OnTriggerExit(Collider coll)
 	{
-		if (coll.tag == "HealSpot")
-		{
-			healEffect.SetActive (false);
-		}
+		
 	}
 
 	// Damage the character
@@ -167,14 +140,7 @@ public class CharacterStats : MonoBehaviour {
 	{
 		damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
-
 		currentHealth -= damage;
 		Debug.Log(transform.name + " takes " + damage + " damage.");
-
-
-		if (currentHealth <= 1)
-		{
-			this.gameObject.SetActive (false);
-		}
 	}
 }

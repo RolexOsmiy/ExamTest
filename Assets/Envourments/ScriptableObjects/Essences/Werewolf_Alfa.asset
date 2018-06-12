@@ -17,8 +17,9 @@ MonoBehaviour:
   branch: 2
   toBranch: 3
   artwork: {fileID: 21300000, guid: 54e98ec962348014c98eee298c01af10, type: 3}
-  skin: {fileID: 0}
-  requiredLevel: 0
+  skin: {fileID: 1199309021355846, guid: 05350a2d65129d14b84545e84fe5a82a, type: 2}
+  requiredLevel: 2
   defaultDamage: 150
   defaultHealth: 600
   defaultArmor: 0
+  attackSpeed: 1

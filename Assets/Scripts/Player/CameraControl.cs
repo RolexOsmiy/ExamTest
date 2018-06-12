@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class CameraControl : MonoBehaviour 
+public class CameraControl : NetworkBehaviour 
 {
 	public GameObject player;  //The offset of the camera to centrate the player in the X axis
 	public float offsetX = -5;  //The offset of the camera to centrate the player in the Z axis

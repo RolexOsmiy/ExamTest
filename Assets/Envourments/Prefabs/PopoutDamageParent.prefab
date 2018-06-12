@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.44117647, b: 0.44117647, a: 1}
+  m_Color: {r: 1, g: 0.1397059, b: 0.1397059, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -96,7 +96,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 
 --- !u!114 &114258015797695842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95945301956811480}
+  damageText: {fileID: 114090954073642584}
 --- !u!114 &114444043591629316
 MonoBehaviour:
   m_ObjectHideFlags: 1

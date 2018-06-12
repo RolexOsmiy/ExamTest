@@ -7,6 +7,7 @@ public class HostGame : MonoBehaviour {
 
 	[SerializeField]
 	uint roomSize =  10;
+	//public Text roomSizeText;
 
 	string roomName;
 
@@ -40,5 +41,10 @@ public class HostGame : MonoBehaviour {
 			//Create room
 			networkManager.matchMaker.CreateMatch(roomName, roomSize, true, "", "", "", 0, 0, networkManager.OnMatchCreate);
 		}
+	}
+
+	public void Exit()
+	{
+		Application.Quit();
 	}
 }
