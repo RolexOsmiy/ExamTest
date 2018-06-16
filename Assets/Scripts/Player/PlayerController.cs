@@ -44,7 +44,8 @@ public class PlayerController : NetworkBehaviour
 			rb.AddForce (body.transform.forward * moveSpeed);
 			animator.SetInteger ("State", 1);
 			attackTrigger.SetActive (false);
-		} else if (Input.GetMouseButton (0)) {			
+		} else if (Input.GetMouseButton (0)) {	
+            
 			animator.SetInteger ("State", 2);
 			attackTrigger.SetActive (true);
 			currAttackSpeed = 0;

@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0840d69fe3bfac545843f99909159ce8, type: 3}
   m_Name: 1_1_Monster
   m_EditorClassIdentifier: 
-  name: Bacteria
-  description: Just bacteria.
+  name: Monster 1
+  description: Just monster.
   race: Nothing
   branch: 0
   toBranch: 1
@@ -22,4 +22,4 @@ MonoBehaviour:
   defaultDamage: 15
   defaultHealth: 400
   defaultArmor: 0
-  attackSpeed: 1
+  attackSpeed: 0.5

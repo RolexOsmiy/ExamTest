@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class UserRegistration : NetworkBehaviour {
 
@@ -20,7 +21,7 @@ public class UserRegistration : NetworkBehaviour {
 			login.SetActive (false);
 			matchMaker.SetActive (true);
 		}
-	}
+    }
 
 	/*public static string inputPassword = "NONE";
 

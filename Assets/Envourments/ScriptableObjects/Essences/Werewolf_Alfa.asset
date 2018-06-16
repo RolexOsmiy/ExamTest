@@ -22,4 +22,4 @@ MonoBehaviour:
   defaultDamage: 150
   defaultHealth: 600
   defaultArmor: 0
-  attackSpeed: 1
+  attackSpeed: 0.5

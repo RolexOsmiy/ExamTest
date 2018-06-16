@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Timer : NetworkBehaviour {
 
@@ -22,6 +23,8 @@ public class Timer : NetworkBehaviour {
 
 	public GameObject[] players;
 
+    public GameObject WinObject;
+
 	void Start () 
 	{
 		
@@ -31,14 +34,21 @@ public class Timer : NetworkBehaviour {
 	{
 		players = GameObject.FindGameObjectsWithTag("Player");
 
-		if (!isServer) 
+        readyText.text = (Network.connections.Length + 1).ToString();
+
+        if (!isServer) 
 		{			
 			readyButton.SetActive (false);
 		}
 
 		if (!pause) 
 		{
-			for (int i = 0; i < objectsToDisable.Length; i++) {
+            if ((Network.connections.Length + 1) <= 1)
+            {
+                WinObject.SetActive(true);
+            }            
+
+            for (int i = 0; i < objectsToDisable.Length; i++) {
 				objectsToDisable [i].SetActive(false);
 				pause = false;
 			}
@@ -48,7 +58,7 @@ public class Timer : NetworkBehaviour {
 			}
 
 			timer += Time.deltaTime;
-
+            
 			string minutes = Mathf.Floor (timer / 60).ToString ("00");
 			string seconds = (timer % 60).ToString ("00");
 
@@ -70,7 +80,16 @@ public class Timer : NetworkBehaviour {
 		{
 			pause = false;
 			readyButton.SetActive (false);
-			print ("ready");
 		}
 	}
+
+    public void Return()
+    {
+        WinObject.SetActive(false);
+    }
+
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
