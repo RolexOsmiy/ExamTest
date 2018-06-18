@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class AttackTrigger : MonoBehaviour {
+public class AttackTrigger : NetworkBehaviour {
 
 	public PlayerStats playerStats;
 	public float attackSpeed;
@@ -28,7 +29,7 @@ public class AttackTrigger : MonoBehaviour {
 		{
 			if (coll.gameObject.GetComponent<CharacterStats> ()) 
 			{
-				coll.gameObject.GetComponent<CharacterStats> ().Hurt ((int)playerStats.damage);
+				coll.gameObject.GetComponent<CharacterStats> ().Hurt (playerStats.damage);
 				if (coll.gameObject.GetComponent<CharacterStats>().Health <= 0) 
 				{
 					playerStats.currExp += coll.gameObject.GetComponent<CharacterStats> ().exp;
@@ -39,9 +40,9 @@ public class AttackTrigger : MonoBehaviour {
 				currAttackSpeed = 0;
 			}
 
-			if (coll.gameObject.GetComponent<PlayerStats> ()) 
+			if (coll.gameObject.GetComponent<PlayerStats> () && !isLocalPlayer) 
 			{
-				coll.gameObject.GetComponent<PlayerStats> ().Hurt ((int)playerStats.damage);
+				coll.gameObject.GetComponent<PlayerStats> ().Hurt (playerStats.damage);
 				if (coll.gameObject.GetComponent<PlayerStats>().currentHealthPoints <= 0) 
 				{
 					playerStats.currExp += expForKills * coll.gameObject.GetComponent<PlayerStats>().currLevel;
@@ -54,7 +55,7 @@ public class AttackTrigger : MonoBehaviour {
 
 			if (coll.gameObject.GetComponent<InnocentController> ()) 
 			{
-				coll.gameObject.GetComponent<InnocentController> ().Hurt ((int)playerStats.damage);
+				coll.gameObject.GetComponent<InnocentController> ().Hurt (playerStats.damage);
 				if (coll.gameObject.GetComponent<InnocentController>().currentHealthPoints <= 0) 
 				{
 					playerStats.currExp += expForKills;

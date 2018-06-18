@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.AI;
 
 /* Controls the Enemy AI */
 
-public class EnemyController : MonoBehaviour {
+public class EnemyController : NetworkBehaviour {
 
 	public Animator animator;
 

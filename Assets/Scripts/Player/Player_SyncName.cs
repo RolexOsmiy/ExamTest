@@ -7,40 +7,30 @@ using TMPro;
 
 public class Player_SyncName : NetworkBehaviour {
 
-	[SyncVar]
-	private string userName = UserRegistration.inputUserName;
+
+	private string userName;
 
 	[SerializeField] Transform myTransform;
 	public TextMeshProUGUI userNameText;
-	[SerializeField] float lerpRate = 15;
 
 	void FixedUpdate () 
 	{
-		TransmitName ();
-		LerpName ();
-	}
-
-	void LerpName()
-	{
-		if (!isLocalPlayer) 
+		if (isLocalPlayer) 
 		{
-			myTransform.name = userName;
-			userNameText.SetText(userName);
+			CmdSendNameToServer (UserRegistration.inputUserName);
 		}
 	}
 
 	[Command]
-	void CmdProvideNameToServer(string name)
+	void CmdSendNameToServer(string nameToSend)
 	{
-		myTransform.name = name;
-		userNameText.SetText(name);
+		RpcSetPlayerName(nameToSend);
 	}
 
-	[Client]
-	void TransmitName()
+	[ClientRpc]
+	void RpcSetPlayerName(string name)
 	{
-		if (isLocalPlayer) {
-			CmdProvideNameToServer (userName);
-		}
+		userNameText.SetText (name);
+		myTransform.name = name;
 	}
 }

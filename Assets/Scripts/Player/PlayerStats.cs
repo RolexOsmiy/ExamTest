@@ -46,9 +46,7 @@ public class PlayerStats : NetworkBehaviour {
 	public float damage;
 	public float armor;
 
-	[SyncVar]
 	private float curHealth;
-	[SerializeField] float lerpRate = 15;
 
 	[SerializeField] public float currentHealthPoints;
 
@@ -68,8 +66,7 @@ public class PlayerStats : NetworkBehaviour {
 	{
 		spawnPoints = FindObjectsOfType<NetworkStartPosition> ();
 		hitEffect.Stop ();
-	}
-
+	}		
 
 	public float Health
     {
@@ -146,15 +143,16 @@ public class PlayerStats : NetworkBehaviour {
     }
 
 	public void Hurt(float damagesPoints)
-    {
-        Damages = damagesPoints;
-        Health -= Damages;
+	{
+		print ("Damaged");
+		Damages = damagesPoints;
+		Health -= Damages;
 
 		hitEffect.Play();
 		GameObject clone;
 		clone = Instantiate(popoutDamage, transform.parent.position, transform.parent.rotation);
 		clone.GetComponentInChildren<PopoutDamage>().damageText.text = damagesPoints + "";
-    }
+	}
 
     public void Respawn()
     {
@@ -166,7 +164,7 @@ public class PlayerStats : NetworkBehaviour {
     {
         if (currentHealthPoints <= maxHealthPoints)
         {
-			currentHealthPoints += (1/(100/currentHealthPoints)) * Time.deltaTime;
+			currentHealthPoints += (1/(100/maxHealthPoints)) * Time.deltaTime;
         }
     }
 
@@ -207,7 +205,7 @@ public class PlayerStats : NetworkBehaviour {
 	public void EvolutionSetStats()
 	{		
 		damageText.text = "Damage: " + damage;
-		healthText.text = "Health: " + (int)currentHealthPoints + "/" + maxHealthPoints;
+		healthText.text = "Health: " + (int)Health + "/" + maxHealthPoints;
 		armorText.text = "Armor: " + armor;
 		essenceText.text = "Essence: " + essence.name;
 		essenceIcon.sprite = essence.artwork;
@@ -232,28 +230,6 @@ public class PlayerStats : NetworkBehaviour {
 		armor = essence.defaultArmor;
 
 		Health -= 0;
-	}
-
-	void LerpHealth()
-	{
-		if (!isLocalPlayer) 
-		{
-			currentHealthPoints = curHealth;
-		}
-	}
-
-	[Command]
-	void CmdProvideHealthToServer(float health)
-	{
-		curHealth = Health;
-	}
-
-	[ClientCallback]
-	void TransmitHealth()
-	{
-		if (isLocalPlayer) {
-			CmdProvideHealthToServer (curHealth);
-		}
 	}
 }
 

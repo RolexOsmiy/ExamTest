@@ -34,7 +34,7 @@ public class Timer : NetworkBehaviour {
 	{
 		players = GameObject.FindGameObjectsWithTag("Player");
 
-        readyText.text = (Network.connections.Length + 1).ToString();
+		readyText.text = (Network.connections.Length + 1).ToString() + " Players.";
 
         if (!isServer) 
 		{			
@@ -43,10 +43,13 @@ public class Timer : NetworkBehaviour {
 
 		if (!pause) 
 		{
-            if ((Network.connections.Length + 1) <= 1)
-            {
-                WinObject.SetActive(true);
-            }            
+			if ((Network.connections.Length + 1) <= 0) {
+				WinObject.SetActive (true);
+			} 
+			else 
+			{
+				WinObject.SetActive (false);
+			}
 
             for (int i = 0; i < objectsToDisable.Length; i++) {
 				objectsToDisable [i].SetActive(false);
