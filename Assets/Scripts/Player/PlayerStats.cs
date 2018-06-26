@@ -103,8 +103,8 @@ public class PlayerStats : NetworkBehaviour {
 
 
     protected void Update()
-    {
-		if (lives <= 0) 
+    {   
+        if (lives <= 0) 
 		{
 			SceneManager.LoadScene (0);
 		}
@@ -230,7 +230,7 @@ public class PlayerStats : NetworkBehaviour {
 		armor = essence.defaultArmor;
 
 		Health -= 0;
-	}
+	}    
 }
 
 [System.Serializable]
